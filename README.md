@@ -12,8 +12,8 @@ A conversational AI chatbot built using the Gradio interface and DialoGPT model 
 
 Clone the repository:
 
-git clone https://github.com/AsliCY/chatbot.git
-cd chatbot
+- git clone https://github.com/AsliCY/chatbot.git
+- cd chatbot
 
 ## Install required packages:
 - pip install -r requirements.txt
@@ -26,8 +26,8 @@ cd chatbot
 
 ## Model Configuration
 - The chatbot is configured with the following parameters:
-  Model: DialoGPT-small
-  Temperature: 0.7
-  Top-k: 50
-  Top-p: 0.95
-  Max Length: 100
+  - Model: DialoGPT-small
+  - Temperature: 0.7
+  - Top-k: 50
+  - Top-p: 0.95
+  - Max Length: 100
