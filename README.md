@@ -26,7 +26,7 @@ Clone the repository:
 
 ## Model Configuration
 - The chatbot is configured with the following parameters:
-  - Model: DialoGPT-small
+  - Model: DialoGPT-large
   - Temperature: 0.7
   - Top-k: 50
   - Top-p: 0.95
