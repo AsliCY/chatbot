@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="chatbox">
+        <h2>AI Chatbot</h2>
+        <div id="messages"></div>
+        <div id="input-container">
+            <input type="text" id="userInput" placeholder="Type your message here..."
+                   onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    
+    <script>
+    async function sendMessage() {
+        const userInput = document.getElementById("userInput");
+        const message = userInput.value.trim();
+        if (!message) return;
+        
+        // Disable input and button while processing
+        const button = document.querySelector('button');
+        userInput.disabled = true;
+        button.disabled = true;
+        
+        // Show user message
+        addMessage(message, 'user');
+        userInput.value = '';
+        
+        // Show typing indicator
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot typing';
+        typingDiv.textContent = 'Bot is typing...';
+        document.getElementById('messages').appendChild(typingDiv);
+        
+        try {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: message})
+            });
+            
+            const data = await response.json();
+            
+            // Remove typing indicator
+            typingDiv.remove();
+            
+            // Show bot response
+            addMessage(data.response, 'bot');
+        } catch (error) {
+            // Remove typing indicator
+            typingDiv.remove();
+            addMessage('Error: Could not reach the server', 'bot');
+        } finally {
+            // Re-enable input and button
+            userInput.disabled = false;
+            button.disabled = false;
+            userInput.focus();
+        }
+    }
+    
+    function addMessage(text, sender) {
+        const messages = document.getElementById("messages");
+        const div = document.createElement("div");
+        div.className = `message ${sender}`;
+        div.textContent = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+    </script>
+</body>
+</html>
